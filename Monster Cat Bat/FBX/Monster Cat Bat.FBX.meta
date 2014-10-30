@@ -1,0 +1,113 @@
+fileFormatVersion: 2
+guid: 7c42dcfb0e1e8c34b89b694bf72f964f
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: BatRig
+    100002: //RootNode
+    100004: MonsterBat
+    100006: BatRigHead
+    100008: BatRigLArm1
+    100010: BatRigLArm2
+    100012: BatRigLArmCollarbone
+    100014: BatRigLArmPalm
+    100016: BatRigLEar
+    100018: BatRigLLeg
+    100020: BatRigNeck
+    100022: BatRigPelvis
+    100024: BatRigRArm1
+    100026: BatRigRArm2
+    100028: BatRigRArmCollarbone
+    100030: BatRigRArmPalm
+    100032: BatRigREar
+    100034: BatRigRibCage
+    100036: BatRigRLeg
+    100038: BatRigSpine
+    100040: BatRigTail1
+    100042: BatRigTail2
+    100044: BatRigTail3
+    100046: BatRigTail4
+    400000: BatRig
+    400002: //RootNode
+    400004: MonsterBat
+    400006: BatRigHead
+    400008: BatRigLArm1
+    400010: BatRigLArm2
+    400012: BatRigLArmCollarbone
+    400014: BatRigLArmPalm
+    400016: BatRigLEar
+    400018: BatRigLLeg
+    400020: BatRigNeck
+    400022: BatRigPelvis
+    400024: BatRigRArm1
+    400026: BatRigRArm2
+    400028: BatRigRArmCollarbone
+    400030: BatRigRArmPalm
+    400032: BatRigREar
+    400034: BatRigRibCage
+    400036: BatRigRLeg
+    400038: BatRigSpine
+    400040: BatRigTail1
+    400042: BatRigTail2
+    400044: BatRigTail3
+    400046: BatRigTail4
+    2300000: MonsterBat
+    3300000: MonsterBat
+    4300000: MonsterBat
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: MonsterBat
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 1
+  userData: 
