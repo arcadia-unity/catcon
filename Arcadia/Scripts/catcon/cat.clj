@@ -53,31 +53,31 @@
         f (reduce v+ fs)]
     (Vector3/RotateTowards h f speed 0)))
 
+(defn flock [heading position flockmates]
+  (let [flock-positions (map #(.. % transform position) flockmates)
+        flock-headings (map #(.. % (GetComponent Cat) heading) flockmates)]
+    (-> heading
+      (cohesion position flock-positions 2)
+      (separation position flock-positions 60)
+      (alignment flock-headings 2))))
+
 (defn cat-update [^Cat this]
-  (comment ;; wandering
-    (set! (.. this heading) (random-vector)))
-  
   (let [position (.. this transform position)
         
-        flock-big (flockmates position 6)
+        ; flock-big (flockmates position 6)
+        ; flock-sml (flockmates position 2)
         flock-med (flockmates position 4)
-        flock-sml (flockmates position 2)
-        
-        positions-big (map #(.. % transform position)
-                       flock-big)
-        positions-sml (map #(.. % transform position)
-                       flock-sml)
-        headings (map #(.. % (GetComponent Cat) heading)
-                      flock-med)
         
         speed (* Time/deltaTime (.. this rotate-speed))
-        heading (-> (.. this heading)
-                    (cohesion position positions-big 2)
-                    (separation position positions-sml 60)
-                    (alignment headings 2))]
+        heading (flock (.. this heading)
+                       position
+                       flock-med)]
     (set! (.. this transform forward)
           (Vector3/RotateTowards (.. this transform forward)
                                  heading speed 0))))
+
+(defn cat-wander [^Cat this]
+  (set! (.. this heading) (random-vector)))
 
 (comment
   (doseq [x (range 0 30 2)
