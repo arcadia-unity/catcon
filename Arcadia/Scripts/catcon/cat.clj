@@ -9,18 +9,19 @@
 
 (declare cat-update)
 
-(defcomponent Cat [^Vector3 heading
-                   ^float rotate-speed]
+(defcomponent Cat [^float rotate-speed
+                   heading]
   (Start [this]
     (set! rotate-speed 1.0)
-    (set! (.. this heading) (random-vector)))
+    (set! (.. this heading) (agent (random-vector))))
   
   (Update [this]
     (catcon.cat/cat-update this))
   (OnDrawGizmos [this]
     (set! Gizmos/color Color/green)
-    (Gizmos/DrawRay (.. this transform position)
-                    (.. this heading))
+    (if heading
+      (Gizmos/DrawRay (.. this transform position)
+                      @(.. this heading)))
     (set! Gizmos/color Color/red)
     (Gizmos/DrawRay (.. this transform position)
                     (.. this transform forward))))
@@ -35,7 +36,7 @@
 
 (defn near-headings [^Vector3 pos ^double radius]
   (->> (near pos radius catcon.cat.Cat)
-       (map #(.heading %))))
+       (map #(deref (.heading %)))))
 
 (defn v÷ ^Vector3 [^Vector3 v1 ^Vector3 v2]
   (Vector3/op_Division v1 v2))
@@ -53,31 +54,29 @@
         f (reduce v+ fs)]
     (Vector3/RotateTowards h f speed 0)))
 
-(defn flock [heading position flockmates]
-  (let [flock-positions (map #(.. % transform position) flockmates)
-        flock-headings (map #(.. % (GetComponent Cat) heading) flockmates)]
-    (-> heading
+(defn flock [heading position flock-positions flock-headings]
+  (-> heading
       (cohesion position flock-positions 2)
       (separation position flock-positions 60)
-      (alignment flock-headings 2))))
+      (alignment flock-headings 2)))
 
 (defn cat-update [^Cat this]
   (let [position (.. this transform position)
-        
-        ; flock-big (flockmates position 6)
-        ; flock-sml (flockmates position 2)
-        flock-med (flockmates position 4)
+        mates  (flockmates position 4)
+        flock-positions (mapv #(.. % transform position) mates)
+        flock-headings (mapv #(deref (.. % (GetComponent Cat) heading)) mates)
         
         speed (* Time/deltaTime (.. this rotate-speed))
-        heading (flock (.. this heading)
-                       position
-                       flock-med)]
+        heading (send (.. this heading) flock
+                      position
+                      flock-positions
+                      flock-headings)
+        ^Vector3 heading @heading]
     (set! (.. this transform forward)
           (Vector3/RotateTowards (.. this transform forward)
                                  heading speed 0))))
-
-(defn cat-wander [^Cat this]
-  (set! (.. this heading) (random-vector)))
+; (defn cat-wander [^Cat this]
+;   (set! (.. this heading) (random-vector)))
 
 (comment
   (doseq [x (range 0 30 2)
