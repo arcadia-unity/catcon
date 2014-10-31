@@ -357,6 +357,10 @@ Prefab:
       propertyPath: m_RootMapOrder
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: f4a52397e6b712142a8b08bedd425260, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 228b7ce4905604d9cb56fcbdc23bebb6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4a52397e6b712142a8b08bedd425260, type: 2}
   m_RootGameObject: {fileID: 2086532047}
@@ -2539,7 +2543,7 @@ Animator:
   m_GameObject: {fileID: 2086532047}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a9521a3a72deee646ad8dd8df959a8f8, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 228b7ce4905604d9cb56fcbdc23bebb6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
