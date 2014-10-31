@@ -1,5 +1,12 @@
 (ns catcon.interop)
 
+(defn get-components
+  ([^UnityEngine.GameObject go]
+   (.GetComponents go UnityEngine.Component))
+  
+  ([^UnityEngine.GameObject go ^System.Type t]
+   (.GetComponents go t)))
+
 (defmacro set-with! [obj [sym prop] & body]
   `(let [obj# ~obj
          ~sym (. obj# ~prop)]
