@@ -1,4 +1,5 @@
-(ns catcon.interop)
+(ns catcon.interop
+  (:use arcadia.core))
 
 (defn get-components
   ([^UnityEngine.GameObject go]
