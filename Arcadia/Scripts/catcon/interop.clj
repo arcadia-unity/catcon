@@ -23,3 +23,15 @@
     `(let [~exprsym ~expr]
        ~(cons 'cond
           (concat cs default)))))
+
+;; for repl redefs, we need something way better than this tho
+;; dataflow stuff would be nice
+(defmacro defscn [name & body]
+  `(def ~name 
+     (do (declare ~name)
+         (when-not
+             (instance? clojure.lang.Var+Unbound
+               (var-get (resolve (quote ~name))))
+           (destroy ~name))
+         ~@body)))
+
