@@ -1,4 +1,5 @@
-(ns catcon.interop)
+(ns catcon.interop
+  (:import [UnityEngine Application]))
 
 (defn get-components
   ([^UnityEngine.GameObject go]
@@ -30,3 +31,6 @@
     `(let [~exprsym ~expr]
        ~(cons 'cond
           (concat cs default)))))
+
+(defn restart []
+  (Application/LoadLevel Application/loadedLevelName))

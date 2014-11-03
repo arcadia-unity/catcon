@@ -1,5 +1,6 @@
 (ns catcon.cat
   (:use arcadia.core
+        catcon.interop
         catcon.linear)
   (:import [UnityEngine Time Vector3 Mathf Physics Gizmos Color Transform]))
 
@@ -49,9 +50,19 @@
     (Vector3/RotateTowards h (v- average p) speed 0)))
 
 (defn separation [h p positions speed]
-  (let [fs (map #(v- p %) positions)
-        f (reduce v+ fs)]
+  (let [f (->> positions
+               (map #(v- p %))
+               (reduce v+))]
     (Vector3/RotateTowards h f speed 0)))
+
+(defn repulsion [h p point radius speed]
+  (let [to-point (v- point p)]
+    (if (< (.magnitude to-point) radius)
+        (Vector3/RotateTowards h (v* -1 (.normalized to-point)) speed 0)
+        h)))
+
+(defn force-2d [^Vector3 v]
+  (Vector3. (.x v) 0 (.z v)))
 
 (defn flock [heading position flockmates]
   (let [flock-positions (map #(.. % transform position) flockmates)
@@ -59,22 +70,28 @@
     (-> heading
       (cohesion position flock-positions 2)
       (separation position flock-positions 60)
-      (alignment flock-headings 2))))
+      (alignment flock-headings 2)
+      (repulsion position (Vector3. -5 0 0) 10 20)
+      force-2d
+      )))
+; (restart)
+
+(defn destroy-on-fall [^Cat this]
+  (if (> (.. this rigidbody velocity magnitude)
+         20)
+    (destroy (.gameObject this))))
 
 (defn cat-update [^Cat this]
   (let [position (.. this transform position)
-        
-        ; flock-big (flockmates position 6)
-        ; flock-sml (flockmates position 2)
-        flock-med (flockmates position 4)
-        
+        flock-medium (flockmates position 4)        
         speed (* Time/deltaTime (.. this rotate-speed))
         heading (flock (.. this heading)
                        position
-                       flock-med)]
+                       flock-medium)]
     (set! (.. this transform forward)
           (Vector3/RotateTowards (.. this transform forward)
-                                 heading speed 0))))
+                                 heading speed 0)))
+  (destroy-on-fall this))
 
 (defn cat-wander [^Cat this]
   (set! (.. this heading) (random-vector)))
@@ -90,5 +107,7 @@
 
 (.GetInstanceID (object-named "/Cat"))
 
-(set! (.. (object-named "/Cat") transform forward) Vector3/forward))
+(set! (.. (object-named "/Cat") transform forward) Vector3/forward)
 
+(restart)
+)
