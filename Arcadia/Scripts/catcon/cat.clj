@@ -66,12 +66,13 @@
 
 (defn flock [heading position flockmates]
   (let [flock-positions (map #(.. % transform position) flockmates)
-        flock-headings (map #(.. % (GetComponent Cat) heading) flockmates)]
+        flock-headings (map #(.. % (GetComponent Cat) heading) flockmates)
+        repulsion-point (.. (object-named "Repulsor") transform position)]
     (-> heading
       (cohesion position flock-positions 2)
       (separation position flock-positions 60)
       (alignment flock-headings 2)
-      (repulsion position (Vector3. -5 0 0) 10 20)
+      (repulsion position repulsion-point 10 20)
       force-2d
       )))
 ; (restart)

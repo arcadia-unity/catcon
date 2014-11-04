@@ -1,5 +1,5 @@
 (ns catcon.interop
-  (:import [UnityEngine Application]))
+  (:import [UnityEngine Application Vector3 Physics Ray RaycastHit Mathf Input]))
 
 (defn get-components
   ([^UnityEngine.GameObject go]
@@ -34,3 +34,12 @@
 
 (defn restart []
   (Application/LoadLevel Application/loadedLevelName))
+
+(defn raycast [^Ray ray]
+  (let [hits (Physics/RaycastAll ray)]
+    (if (> (alength hits) 0)
+      (aget hits 0))))
+
+(defn mouse?
+  ([] (mouse? 0))
+  ([^long button] (Input/GetMouseButtonDown button)))
