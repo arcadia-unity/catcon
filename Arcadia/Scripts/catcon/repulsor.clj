@@ -14,8 +14,11 @@
   (if (mouse?)
     (let [ray (.. this camera (ScreenPointToRay Input/mousePosition))]
       (if-let [^RaycastHit hit (raycast ray)]
-        (set! (.. (object-named "Repulsor") transform position)
-              (.. hit point))))))
+        (do
+          (set! (.. (object-named "Repulsor") transform position)
+                (.. hit point))
+          (set! (.. this (GetComponent catcon.camera.Camera) target)
+                (.. hit point)))))))
 
 (defcomponent MoveRepulsor []
   (Update [this]
