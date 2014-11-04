@@ -75,7 +75,6 @@
       (repulsion position repulsion-point 10 20)
       force-2d
       )))
-; (restart)
 
 (defn destroy-on-fall [^Cat this]
   (if (> (.. this rigidbody velocity magnitude)
@@ -93,22 +92,3 @@
           (Vector3/RotateTowards (.. this transform forward)
                                  heading speed 0)))
   (destroy-on-fall this))
-
-(defn cat-wander [^Cat this]
-  (set! (.. this heading) (random-vector)))
-
-(comment
-  (doseq [x (range 0 30 2)
-          y (range 0 30 2)]
-  (instantiate (object-named "/Cat") (Vector3. x 0 y)))
-
-(dorun (map destroy (objects-named "Cat(Clone)")))
-
-(set! (.angle (get-component (object-named "/Cat") catcon.cat.Cat)) 360)
-
-(.GetInstanceID (object-named "/Cat"))
-
-(set! (.. (object-named "/Cat") transform forward) Vector3/forward)
-
-(restart)
-)
