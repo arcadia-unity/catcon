@@ -1,5 +1,6 @@
 (ns catcon.interop
-  (:import [UnityEngine Application Vector3 Physics Ray RaycastHit Mathf Input]))
+  (:import [UnityEngine Application Vector3 Physics Ray RaycastHit Mathf Input]
+           PhysicsShim))
 
 (defn get-components
   ([^UnityEngine.GameObject go]
@@ -35,10 +36,15 @@
 (defn restart []
   (Application/LoadLevel Application/loadedLevelName))
 
+(defmacro aseq [ary]
+  (let [^type t (-> ary resolve deref (aget 0) type)]
+    `(new ~(symbol (str "clojure.lang.TypedArraySeq`1[" t "]"))
+          nil
+          ~ary
+          0)))
+
 (defn raycast [^Ray ray]
-  (let [hits (Physics/RaycastAll ray)]
-    (if (> (alength hits) 0)
-      (aget hits 0))))
+  (PhysicsShim/Raycast ray))
 
 (defn mouse?
   ([] (mouse? 0))
